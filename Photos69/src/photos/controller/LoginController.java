@@ -1,4 +1,4 @@
-package controller;
+package photos.controller;
 
 public class LoginController {
     

@@ -1,4 +1,4 @@
-package model;
+package photos.model;
 
 import java.io.*;
 import java.util.ArrayList;

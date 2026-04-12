@@ -1,5 +1,5 @@
 package photos.controller;
 
-public class AdminController {
+public class AlbumListController {
     
 }
