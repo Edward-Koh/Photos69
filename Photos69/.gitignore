@@ -6,3 +6,6 @@ lib/
 
 # OS junk
 .DS_Store
+
+# Ignore runtime data
+data/*.dat
