@@ -26,10 +26,6 @@
             <TableColumn fx:id="countColumn"     text="Photos"     prefWidth="80"/>
             <TableColumn fx:id="dateRangeColumn" text="Date Range" prefWidth="280"/>
         </columns>
-        <!-- Double click to open album -->
-        <rowFactory>
-            <TableRowFactory/>
-        </rowFactory>
     </TableView>
 
     <!-- Album CRUD buttons -->

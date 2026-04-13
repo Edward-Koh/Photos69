@@ -74,6 +74,12 @@ public class AlbumListController {
             return new javafx.beans.property.SimpleStringProperty(range);
         });
 
+        albumTable.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2 && albumTable.getSelectionModel().getSelectedItem() != null) {
+                handleOpenAlbum();
+            }
+        });
+
         refreshAlbumTable();
     }
 
