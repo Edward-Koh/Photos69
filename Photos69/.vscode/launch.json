@@ -6,7 +6,7 @@
       "name": "Photos",
       "request": "launch",
       "mainClass": "photos.Photos",
-      "vmArgs": "--module-path lib --add-modules javafx.controls,javafx.fxml"
+      "vmArgs": "--module-path lib/javafx-sdk-21.0.10/lib --add-modules javafx.controls,javafx.fxml"
     }
   ]
 }
