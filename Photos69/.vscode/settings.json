@@ -1,0 +1,13 @@
+{
+  "java.project.sourcePaths": ["Photos69/src"],
+  "java.project.referencedLibraries": [
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.base.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.web.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx-swt.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.swing.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.media.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.fxml.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.controls.jar",
+    "/common/home/eyk34/cs213/CS213-Project-3-Photos/Photos69/lib/javafx.graphics.jar"
+  ]
+}
