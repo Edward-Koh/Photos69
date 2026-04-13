@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="photos.controller.LoginController"
+      alignment="CENTER"
+      spacing="15"
+      prefWidth="350"
+      prefHeight="250"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="Photos App"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <Label text="Enter your username to log in"
+           style="-fx-font-size: 13px; -fx-text-fill: #555;"/>
+
+    <TextField fx:id="usernameField"
+               promptText="Username"
+               maxWidth="250"/>
+
+    <Button text="Login"
+            onAction="#handleLogin"
+            prefWidth="150"
+            style="-fx-background-color: #0096c7; -fx-text-fill: white; -fx-font-size: 13px;"/>
+
+</VBox>

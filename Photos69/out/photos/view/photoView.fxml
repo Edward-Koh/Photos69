@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="photos.controller.PhotoViewController"
+      spacing="20"
+      prefWidth="850"
+      prefHeight="550"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Left side: full size photo display -->
+    <VBox spacing="10" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
+
+        <Button text="← Back" onAction="#handleBack" alignment="CENTER_LEFT"/>
+
+        <ImageView fx:id="photoImageView"
+                   fitWidth="480" fitHeight="380"
+                   preserveRatio="true"/>
+
+        <Label fx:id="captionLabel"
+               text=""
+               style="-fx-font-size: 13px; -fx-text-fill: #333;"/>
+
+        <Label fx:id="dateLabel"
+               text=""
+               style="-fx-font-size: 12px; -fx-text-fill: #777;"/>
+
+    </VBox>
+
+    <!-- Right side: tag management panel -->
+    <VBox spacing="10" prefWidth="280">
+
+        <Label text="Tags"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <!-- List of existing tags -->
+        <ListView fx:id="tagListView" prefHeight="200"/>
+
+        <Button text="Delete Selected Tag"
+                onAction="#handleDeleteTag"
+                prefWidth="200"
+                style="-fx-background-color: #e63946; -fx-text-fill: white;"/>
+
+        <Separator/>
+
+        <!-- Add new tag controls -->
+        <Label text="Add Tag"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Type:" minWidth="40"/>
+            <ComboBox fx:id="tagTypeComboBox" prefWidth="150"/>
+        </HBox>
+
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Value:" minWidth="40"/>
+            <TextField fx:id="tagValueField"
+                       promptText="Enter value"
+                       prefWidth="150"/>
+        </HBox>
+
+        <HBox spacing="8">
+            <Button text="Add Tag"
+                    onAction="#handleAddTag"
+                    prefWidth="120"
+                    style="-fx-background-color: #0096c7; -fx-text-fill: white;"/>
+            <Button text="New Tag Type"
+                    onAction="#handleAddCustomTagType"
+                    prefWidth="120"/>
+        </HBox>
+
+    </VBox>
+
+</HBox>

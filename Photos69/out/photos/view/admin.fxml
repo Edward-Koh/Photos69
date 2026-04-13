@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="photos.controller.AdminController"
+      spacing="12"
+      prefWidth="400"
+      prefHeight="450"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Admin Panel"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <Label text="Manage Users"
+           style="-fx-font-size: 13px; -fx-text-fill: #555;"/>
+
+    <!-- User list takes up most of the space -->
+    <ListView fx:id="userListView" VBox.vgrow="ALWAYS"/>
+
+    <!-- Action buttons -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Create User"
+                onAction="#handleCreateUser"
+                prefWidth="120"
+                style="-fx-background-color: #0096c7; -fx-text-fill: white;"/>
+        <Button text="Delete User"
+                onAction="#handleDeleteUser"
+                prefWidth="120"
+                style="-fx-background-color: #e63946; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Button text="Logout"
+            onAction="#handleLogout"
+            prefWidth="120"/>
+
+</VBox>
