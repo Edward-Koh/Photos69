@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="photos.controller.SearchController"
+      spacing="12"
+      prefWidth="750"
+      prefHeight="620"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- Top bar -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="← Back" onAction="#handleBack"/>
+        <Label text="Search Photos"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Date range search section -->
+    <Label text="Search by Date Range"
+           style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="From:" minWidth="45"/>
+        <DatePicker fx:id="startDatePicker" prefWidth="160"/>
+        <Label text="To:"   minWidth="25"/>
+        <DatePicker fx:id="endDatePicker"   prefWidth="160"/>
+        <Button text="Search by Date"
+                onAction="#handleDateSearch"
+                style="-fx-background-color: #0096c7; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Tag search section -->
+    <Label text="Search by Tag"
+           style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+    <!-- Tag 1 row -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Tag 1:" minWidth="45"/>
+        <ComboBox fx:id="tagType1ComboBox" prefWidth="120"/>
+        <Label text="="/>
+        <TextField fx:id="tagValue1Field" promptText="value" prefWidth="130"/>
+    </HBox>
+
+    <!-- Tag 2 row -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Tag 2:" minWidth="45"/>
+        <ComboBox fx:id="tagType2ComboBox" prefWidth="120"/>
+        <Label text="="/>
+        <TextField fx:id="tagValue2Field" promptText="value" prefWidth="130"/>
+    </HBox>
+
+    <!-- Tag search buttons: single, AND, OR -->
+    <HBox spacing="10">
+        <Button text="Single Tag Search"
+                onAction="#handleSingleTagSearch"
+                prefWidth="150"
+                style="-fx-background-color: #0096c7; -fx-text-fill: white;"/>
+        <Button text="AND Search"
+                onAction="#handleAndSearch"
+                prefWidth="120"
+                style="-fx-background-color: #2a9d8f; -fx-text-fill: white;"/>
+        <Button text="OR Search"
+                onAction="#handleOrSearch"
+                prefWidth="120"
+                style="-fx-background-color: #e9c46a;"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Results section -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Results"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <Label fx:id="resultsCountLabel"
+               text=""
+               style="-fx-text-fill: #555;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Save as Album"
+                onAction="#handleSaveAsAlbum"
+                style="-fx-background-color: #457b9d; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Scrollable results tile pane — same layout as album view -->
+    <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true">
+        <TilePane fx:id="resultsTilePane"
+                  hgap="10" vgap="10"
+                  prefTileWidth="120" prefTileHeight="150"
+                  style="-fx-padding: 10;"/>
+    </ScrollPane>
+
+</VBox>

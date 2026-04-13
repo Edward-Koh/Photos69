@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="photos.controller.AlbumViewController"
+      spacing="10"
+      prefWidth="800"
+      prefHeight="600"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- Top bar: back button and album title -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="← Back" onAction="#handleBack"/>
+        <Label text="Album View"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Photo grid — scrollable TilePane of thumbnails -->
+    <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true">
+        <TilePane fx:id="photoTilePane"
+                  hgap="10" vgap="10"
+                  prefTileWidth="130" prefTileHeight="160"
+                  style="-fx-padding: 10;"/>
+    </ScrollPane>
+
+    <!-- Photo operation buttons -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Button text="Add Photo"     onAction="#handleAddPhoto"    prefWidth="100"
+                style="-fx-background-color: #0096c7; -fx-text-fill: white;"/>
+        <Button text="Remove Photo"  onAction="#handleRemovePhoto" prefWidth="110"
+                style="-fx-background-color: #e63946; -fx-text-fill: white;"/>
+        <Button text="Caption"       onAction="#handleCaptionPhoto" prefWidth="90"/>
+        <Button text="Copy To..."    onAction="#handleCopyPhoto"   prefWidth="90"/>
+        <Button text="Move To..."    onAction="#handleMovePhoto"   prefWidth="90"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Slideshow section -->
+    <Label text="Slideshow"
+           style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="15" alignment="CENTER">
+
+        <Button text="◀ Prev" onAction="#handleSlideshowPrev" prefWidth="90"/>
+
+        <VBox alignment="CENTER" spacing="5">
+            <ImageView fx:id="slideshowImageView"
+                       fitWidth="300" fitHeight="200"
+                       preserveRatio="true"/>
+            <Label fx:id="slideshowCaption"
+                   text=""
+                   style="-fx-font-size: 12px; -fx-text-fill: #333;"/>
+        </VBox>
+
+        <Button text="Next ▶" onAction="#handleSlideshowNext" prefWidth="90"/>
+
+    </HBox>
+
+</VBox>
