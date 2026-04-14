@@ -2,8 +2,10 @@ package photos.model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -61,8 +63,41 @@ public class UserManager implements Serializable {
 
     private List<User> users;
 
+    // Maps tag type name -> whether it allows multiple values per photo
+    // false = single value only (e.g. location), true = multiple allowed (e.g. person)
+    private Map<String, Boolean> tagTypes = new HashMap<>();
+
     public UserManager() {
         users = new ArrayList<>();
+    }
+
+    //-------------------------Tag Type Operations-------------------------
+
+    public void initDefaultTagTypes() {
+        if(tagTypes == null) {
+            tagTypes = new HashMap<>();
+        }
+        tagTypes.putIfAbsent("location", false);
+        tagTypes.putIfAbsent("person",   true);
+    }
+
+    public boolean allowsMultiple(String tagName) {
+        return tagTypes.getOrDefault(tagName.trim().toLowerCase(), true);
+    }
+
+    /**
+     * Adds a new tag type with a specified single/multiple value policy.
+     * Returns false if the tag type already exists.
+     */
+    public boolean addTagType(String tagName, boolean allowMultiple) {
+        String key = tagName.trim().toLowerCase();
+        if(tagTypes.containsKey(key)) return false;
+        tagTypes.put(key, allowMultiple);
+        return true;
+    }
+
+    public Map<String, Boolean> getTagTypes() {
+        return tagTypes;
     }
 
     //-------------------------User Operations-------------------------
@@ -118,6 +153,8 @@ public class UserManager implements Serializable {
      * Populates the stock album with image files from data/.
      */
     public void ensureDefaultUsers() {
+        initDefaultTagTypes(); // ensure default tag types on every load
+
         if(getUser("admin") == null) {
             users.add(new User("admin"));
         }
@@ -169,7 +206,7 @@ public class UserManager implements Serializable {
         try {
             File file = new File(DATA_FILE);
             if(!file.exists()) return new UserManager();
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+            try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
                 return (UserManager) in.readObject();
             }
         }catch(Exception e) {

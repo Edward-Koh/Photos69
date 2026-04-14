@@ -15,21 +15,21 @@ import photos.model.UserManager;
 
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for the photo view screen.
- * Displays a single photo at full size along with its features
+ * Displays a single photo at full size along with its features.
  * Handles adding and deleting tags.
  */
 public class PhotoViewController {
 
-    @FXML private ImageView      photoImageView;
-    @FXML private Label          captionLabel;
-    @FXML private Label          dateLabel;
-    @FXML private ListView<Tag>  tagListView;
+    @FXML private ImageView        photoImageView;
+    @FXML private Label            captionLabel;
+    @FXML private Label            dateLabel;
+    @FXML private ListView<Tag>    tagListView;
     @FXML private ComboBox<String> tagTypeComboBox;
-    @FXML private TextField      tagValueField;
+    @FXML private TextField        tagValueField;
 
     private Stage stage;
     private Photo photo;
@@ -68,10 +68,10 @@ public class PhotoViewController {
         dateLabel.setText("Taken: " + DATE_FORMAT.format(photo.getDateTaken().getTime()));
     }
 
-    // Populates the tag type ComboBox with the user's available tag types
+    // Populates the tag type ComboBox from UserManager's tag type map
     private void populateTagTypeComboBox() {
-        List<String> tagTypes = UserManager.getInstance().getCurrentUser().getTagTypes();
-        tagTypeComboBox.setItems(FXCollections.observableArrayList(tagTypes));
+        Map<String, Boolean> tagTypes = UserManager.getInstance().getTagTypes();
+        tagTypeComboBox.setItems(FXCollections.observableArrayList(tagTypes.keySet()));
         if(!tagTypes.isEmpty()) {
             tagTypeComboBox.getSelectionModel().selectFirst();
         }
@@ -86,15 +86,7 @@ public class PhotoViewController {
 
     /**
      * Handles adding a tag to the current photo.
-     *
-     * Rules enforced:
-     * 1. Tag type and value must not be empty
-     * 2. Duplicate name+value pairs are rejected (Tag.equals handles this)
-     * 3. Single-value tag types (e.g. "location") reject a second value
-     *    if one already exists — checked via UserManager.SINGLE_VALUE_TAG_TYPES
-     *
-     * Since photo is shared by reference, this tag change reflects in all
-     * albums that contain this photo.
+     * Enforces single-value constraint via UserManager.allowsMultiple().
      */
     @FXML
     private void handleAddTag() {
@@ -110,8 +102,8 @@ public class PhotoViewController {
             return;
         }
 
-        // Enforce single-value constraint
-        if(UserManager.SINGLE_VALUE_TAG_TYPES.contains(tagType.toLowerCase())) {
+        // Enforce single-value constraint using UserManager map
+        if(!UserManager.getInstance().allowsMultiple(tagType)) {
             if(!photo.getTagsByName(tagType).isEmpty()) {
                 showError("Tag type \"" + tagType + "\" can only have one value per photo.");
                 return;
@@ -160,8 +152,7 @@ public class PhotoViewController {
 
     /**
      * Handles adding a new custom tag type.
-     * like adding tag to their profile
-     * and refreshes the combobox
+     * Asks the user whether the new type allows single or multiple values.
      */
     @FXML
     private void handleAddCustomTagType() {
@@ -170,23 +161,38 @@ public class PhotoViewController {
         dialog.setHeaderText(null);
         dialog.setContentText("Enter new tag type name:");
 
-        dialog.showAndWait().ifPresent(typeName -> {
-            typeName = typeName.trim();
+        dialog.showAndWait().ifPresent(raw -> {
+            final String typeName = raw.trim();
             if(typeName.isEmpty()) {
                 showError("Tag type name cannot be empty.");
                 return;
             }
 
-            boolean added = UserManager.getInstance()
-                                       .getCurrentUser()
-                                       .addTagType(typeName);
-            if(!added) {
-                showError("That tag type already exists.");
-                return;
-            }
+            // Ask whether this tag type allows multiple values
+            Alert choiceAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            choiceAlert.setTitle("Tag Value Policy");
+            choiceAlert.setHeaderText("Can \"" + typeName + "\" have multiple values per photo?");
+            choiceAlert.setContentText("Choose Single if only one value is allowed (like location),\nor Multiple if many values are allowed (like person).");
 
-            populateTagTypeComboBox();
-            saveData();
+            ButtonType singleBtn   = new ButtonType("Single");
+            ButtonType multipleBtn = new ButtonType("Multiple");
+            ButtonType cancelBtn   = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            choiceAlert.getButtonTypes().setAll(singleBtn, multipleBtn, cancelBtn);
+
+            choiceAlert.showAndWait().ifPresent(response -> {
+                if(response == cancelBtn) return;
+
+                boolean allowMultiple = (response == multipleBtn);
+                boolean added = UserManager.getInstance().addTagType(typeName, allowMultiple);
+
+                if(!added) {
+                    showError("That tag type already exists.");
+                    return;
+                }
+
+                populateTagTypeComboBox();
+                saveData();
+            });
         });
     }
 
