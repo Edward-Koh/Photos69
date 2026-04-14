@@ -60,7 +60,7 @@ public class SearchController {
      */
     public void initData() {
         currentUser = UserManager.getInstance().getCurrentUser();
-        List<String> tagTypes = currentUser.getTagTypes();
+        List<String> tagTypes = new ArrayList<>(UserManager.getInstance().getTagTypes().keySet());
         tagType1ComboBox.setItems(FXCollections.observableArrayList(tagTypes));
         tagType2ComboBox.setItems(FXCollections.observableArrayList(tagTypes));
         if(!tagTypes.isEmpty()) {
