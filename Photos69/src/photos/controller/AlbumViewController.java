@@ -50,6 +50,11 @@ public class AlbumViewController {
         this.currentAlbum = album;
         this.currentUser  = UserManager.getInstance().getCurrentUser();
         refreshPhotoGrid();
+
+        if(!currentAlbum.getPhotos().isEmpty()) {
+            slideshowIndex = 0;
+            showSlideshowPhoto();
+        }
     }
 
 
@@ -88,6 +93,14 @@ public class AlbumViewController {
                 Label broken = new Label("[Missing]\n" + photo.getCaption());
                 photoTilePane.getChildren().add(broken);
             }
+        }
+
+        if(!currentAlbum.getPhotos().isEmpty()) {
+            slideshowIndex = Math.min(slideshowIndex, currentAlbum.getPhotos().size() - 1);
+            showSlideshowPhoto();
+        }else {
+            slideshowImageView.setImage(null);
+            slideshowCaption.setText("");
         }
     }
 

@@ -86,6 +86,7 @@ public class AlbumListController {
     //Reloads the table from the current user's album list.
     private void refreshAlbumTable() {
         albumTable.setItems(FXCollections.observableArrayList(currentUser.getAlbums()));
+        albumTable.refresh();
     }
 
     //---------------------ALBUM FUNCTIONS---------------------

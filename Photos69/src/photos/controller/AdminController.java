@@ -84,6 +84,12 @@ public class AdminController {
             return;
         }
 
+        String username = selected.getUsername();
+        if(username.equals("admin") || username.equals("stock")) {
+            showError("Cannot delete the \"" + username + "\" system user.");
+            return;
+        }
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Delete User");
         confirm.setHeaderText(null);
